@@ -1,8 +1,0 @@
-#ifndef ASTEROIDS_PLAYER_HPP
-#define ASTEROIDS_PLAYER_HPP
-
-class Player {
-
-};
-
-#endif //ASTEROIDS_PLAYER_HPP
