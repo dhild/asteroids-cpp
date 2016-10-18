@@ -18,12 +18,17 @@ include_directories(${OPENGL_INCLUDE_DIRS})
 
 find_package(glbinding REQUIRED)
 
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIR})
+
 find_package(POCO REQUIRED)
 include_directories(${Poco_INCLUDE_DIRS})
 
 include(cmake/settings.cmake)
 config_compiler_and_linker()
 enable_testing()
+
+add_definitions(-DASTEROIDS_BASE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_subdirectory(src)
 add_subdirectory(test)

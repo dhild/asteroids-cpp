@@ -3,22 +3,20 @@
 
 #include <forward_list>
 #include <memory>
+#include <glm/glm.hpp>
 
 namespace objects {
 
-  class Point {
-  public:
-    float x;
-    float y;
-  };
-
   class Player {
-  public:
-    virtual ~Player() {};
+    glm::vec2 position;
+    float orientation;
 
-    virtual Point getFront() const;
-    virtual Point getBackLeft() const;
-    virtual Point getBackRight() const;
+  public:
+    ~Player();
+
+    glm::vec2 getFront() const;
+    glm::vec2 getBackLeft() const;
+    glm::vec2 getBackRight() const;
   };
 
   class LaserShot {
