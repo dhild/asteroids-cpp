@@ -76,3 +76,7 @@ void rendering::Shader::activate() const {
 void rendering::Shader::deactivate() const {
   gl::glUseProgram(0);
 }
+
+gl::GLint rendering::Shader::getUniformLocation(const char* name) const {
+  return gl::glGetUniformLocation(program, name);
+}

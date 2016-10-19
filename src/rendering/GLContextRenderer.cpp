@@ -24,12 +24,28 @@ namespace {
   };
 }
 
+static void handleResizes(SDL_Window* window, int& runningWidth, int& runningHeight) {
+  int width, height;
+  SDL_GL_GetDrawableSize(window, &width, &height);
+
+  if (width == runningWidth && height == runningHeight) {
+    return;
+  }
+  runningWidth = width;
+  runningHeight = height;
+
+  gl::glViewport(0, 0, width, height);
+}
+
 void rendering::run_render_loop(SDL_Window* window,
                                 std::shared_ptr<const ObjectScene> scene,
                                 std::shared_ptr<std::atomic_bool> running) {
   GLContextHandler glContext(window);
 
+  int width, height;
   while ((*running).load()) {
+    handleResizes(window, width, height);
+
     glContext.drawOnce(scene);
 
     SDL_GL_SwapWindow(window);
@@ -55,7 +71,7 @@ static void clearDrawing() {
   static float value = 0.0;
   gl::glClearColor(value, value, value, 1);
   gl::glClear(gl::GL_COLOR_BUFFER_BIT);
-  if (value < 1.0) {
+  if (value < 0.15) {
     value += 0.001;
   }
 }

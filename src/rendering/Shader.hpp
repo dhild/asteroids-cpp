@@ -17,6 +17,8 @@ namespace rendering {
 
     void activate() const;
     void deactivate() const;
+
+    gl::GLint getUniformLocation(const char* name) const;
   };
 }
 

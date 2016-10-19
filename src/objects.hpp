@@ -14,9 +14,13 @@ namespace objects {
   public:
     ~Player();
 
-    glm::vec2 getFront() const;
-    glm::vec2 getBackLeft() const;
-    glm::vec2 getBackRight() const;
+    glm::vec2 getCenter() const {
+      return position;
+    }
+
+    float getOrientation() const {
+      return orientation;
+    }
   };
 
   class LaserShot {
@@ -32,6 +36,9 @@ namespace objects {
   class ObjectScene {
   public:
     virtual ~ObjectScene() {};
+
+    static const float boardWidth;
+    static const float boardHeight;
 
     virtual const Player& getPlayer() const = 0;
 

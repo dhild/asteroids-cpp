@@ -34,6 +34,9 @@ namespace {
   };
 }
 
+const float ObjectScene::boardWidth = 500;
+const float ObjectScene::boardHeight = ObjectScene::boardWidth;
+
 std::shared_ptr<ObjectScene> objects::createScene() {
   return std::make_shared<DefaultObjectScene>();
 }

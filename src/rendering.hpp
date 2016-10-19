@@ -14,7 +14,7 @@ namespace rendering {
     virtual void stop() = 0;
   };
 
-  std::shared_ptr<Window> createWindow(const char* name, int width = 1280, int height = 720);
+  std::shared_ptr<Window> createWindow(const char* name, int width, int height);
 }
 
 #endif //ASTEROIDS_RENDERING_HPP
