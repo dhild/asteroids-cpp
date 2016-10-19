@@ -68,22 +68,26 @@ void PlayerRenderer::draw(const Player& player) const {
 
   glm::mat4 mat(1.0f);
 
-  // Rotate
-  float oCos = std::cos(orientation);
-  float oSin = std::sin(orientation);
-  mat[0].x = oCos;
-  mat[0].y = oSin;
-  mat[1].x = -oSin;
-  mat[1].y = oCos;
-
-  // Scale
-  float scale = 1.0f / 20.0f;
-  mat[0].x *= scale;
-  mat[1].y *= scale;
-
   // Translate
   mat[3].x = pos.x;
   mat[3].y = pos.y;
+
+  // Scale
+  glm::mat4 tmp(1.0f);
+  float scale = 1.0f / 20.0f;
+  tmp[0].x *= scale;
+  tmp[1].y *= scale;
+  mat *= tmp;
+
+  // Rotate
+  tmp = glm::mat4(1.0f);
+  float oCos = std::cos(-orientation);
+  float oSin = std::sin(-orientation);
+  tmp[0].x *= oCos;
+  tmp[0].y = oSin;
+  tmp[1].x = -oSin;
+  tmp[1].y *= oCos;
+  mat *= tmp;
 
   gl::glUniformMatrix4fv(unifClipMatrix, 1, gl::GL_FALSE, glm::value_ptr(mat));
 

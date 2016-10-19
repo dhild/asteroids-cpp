@@ -1,3 +1,4 @@
+#include <thread>
 #include "../objects.hpp"
 
 using namespace objects;
@@ -11,6 +12,10 @@ namespace {
 
   public:
     virtual ~DefaultObjectScene() override {}
+
+    virtual Player& getPlayer() override {
+      return player;
+    }
 
     virtual const Player& getPlayer() const override {
       return player;
@@ -33,9 +38,6 @@ namespace {
     }
   };
 }
-
-const float ObjectScene::boardWidth = 500;
-const float ObjectScene::boardHeight = ObjectScene::boardWidth;
 
 std::shared_ptr<ObjectScene> objects::createScene() {
   return std::make_shared<DefaultObjectScene>();

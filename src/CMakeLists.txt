@@ -3,8 +3,11 @@ set(SOURCE_FILES
         util.cpp util.hpp
         objects.hpp
         rendering.hpp
+        objects/GameTicker.cpp
+        objects/GameTicker.hpp
         objects/ObjectScene.cpp
         objects/Player.cpp
+        objects/Player.hpp
         rendering/GLContextRenderer.cpp
         rendering/GLContextRenderer.hpp
         rendering/PlayerRenderer.cpp

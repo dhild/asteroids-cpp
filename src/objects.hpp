@@ -4,24 +4,9 @@
 #include <forward_list>
 #include <memory>
 #include <glm/glm.hpp>
+#include "objects/Player.hpp"
 
 namespace objects {
-
-  class Player {
-    glm::vec2 position;
-    float orientation;
-
-  public:
-    ~Player();
-
-    glm::vec2 getCenter() const {
-      return position;
-    }
-
-    float getOrientation() const {
-      return orientation;
-    }
-  };
 
   class LaserShot {
   public:
@@ -37,9 +22,7 @@ namespace objects {
   public:
     virtual ~ObjectScene() {};
 
-    static const float boardWidth;
-    static const float boardHeight;
-
+    virtual Player& getPlayer() = 0;
     virtual const Player& getPlayer() const = 0;
 
     typedef std::forward_list<LaserShot>::const_iterator LaserShot_iter;
