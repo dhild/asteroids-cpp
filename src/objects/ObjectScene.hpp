@@ -15,8 +15,6 @@ namespace objects {
     virtual Player& getPlayer() = 0;
     virtual const Player& getPlayer() const = 0;
 
-    typedef std::forward_list<LaserShot>::iterator LaserShot_iter;
-    typedef std::forward_list<Asteroid>::iterator Asteroid_iter;
     typedef std::forward_list<LaserShot>::const_iterator LaserShot_citer;
     typedef std::forward_list<Asteroid>::const_iterator Asteroid_citer;
 
@@ -25,6 +23,11 @@ namespace objects {
     virtual Asteroid_citer beginAsteroids() const = 0;
     virtual Asteroid_citer endAsteroids() const = 0;
 
+    virtual void addAsteroid() = 0;
+    virtual void destroyAsteroid(const Asteroid& ast) = 0;
+
+    typedef std::forward_list<LaserShot>::iterator LaserShot_iter;
+    typedef std::forward_list<Asteroid>::iterator Asteroid_iter;
     virtual LaserShot_iter beginShots() = 0;
     virtual LaserShot_iter endShots() = 0;
     virtual Asteroid_iter beginAsteroids() = 0;

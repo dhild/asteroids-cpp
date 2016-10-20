@@ -7,6 +7,7 @@ using namespace objects;
 static const float pi = std::acos(-1.0f);
 static const float velocity_bound = 0.1f / GameTicker::ticks_per_second;
 static const float rotation_bound = 0.9f / GameTicker::ticks_per_second;
+static const float disappear_distance = 1.2f;
 
 static std::default_random_engine& engine() {
   static std::random_device rand_dev;
@@ -15,7 +16,7 @@ static std::default_random_engine& engine() {
 }
 
 static float randomStartPos() {
-  static std::uniform_real_distribution<float> uniform_dist(-1, 1);
+  static std::uniform_real_distribution<float> uniform_dist(-disappear_distance, disappear_distance);
   return uniform_dist(engine());
 }
 
@@ -43,18 +44,19 @@ Asteroid::Asteroid()
 Asteroid::~Asteroid() {
 }
 
-void Asteroid::tick() {
+bool Asteroid::tick() {
   position += velocity;
-  if (position.x > 1.0f) {
-    position.x = -1.0f;
-  } else if (position.x < -1.0f) {
-    position.x = 1.0f;
+  if (position.x > disappear_distance) {
+    return false;
+  } else if (position.x < -disappear_distance) {
+    return false;
   }
-  if (position.y > 1.0f) {
-    position.y = -1.0f;
-  } else if (position.y < -1.0f) {
-    position.y = 1.0f;
+  if (position.y > disappear_distance) {
+    return false;
+  } else if (position.y < -disappear_distance) {
+    return false;
   }
 
   orientation += rotationRate;
+  return true;
 }

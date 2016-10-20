@@ -17,6 +17,8 @@ set(SOURCE_FILES
         rendering/GLContextRenderer.hpp
         rendering/PlayerRenderer.cpp
         rendering/PlayerRenderer.hpp
+        rendering/AsteroidRenderer.cpp
+        rendering/AsteroidRenderer.hpp
         rendering/SDLWindow.cpp
         rendering/Shader.cpp
         rendering/Shader.hpp

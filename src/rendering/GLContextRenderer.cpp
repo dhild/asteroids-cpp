@@ -5,6 +5,7 @@
 #include "../logging.hpp"
 #include "GLContextRenderer.hpp"
 #include "PlayerRenderer.hpp"
+#include "AsteroidRenderer.hpp"
 
 using namespace rendering;
 using namespace objects;
@@ -14,6 +15,7 @@ namespace {
   class GLContextHandler {
     const SDL_GLContext glContext;
     PlayerRenderer playerRenderer;
+    AsteroidRenderer asteroidRenderer;
   public:
     explicit GLContextHandler(SDL_Window* window);
     GLContextHandler(const GLContextHandler&) = delete;
@@ -75,10 +77,6 @@ static void clearDrawing() {
   }
 }
 
-static void drawAsteroid(const Asteroid&) {
-
-}
-
 static void drawShot(const LaserShot&) {
 
 }
@@ -88,7 +86,9 @@ void GLContextHandler::drawOnce(std::shared_ptr<const ObjectScene> scene) {
 
   playerRenderer.draw(scene->getPlayer());
 
-  std::for_each(scene->beginAsteroids(), scene->endAsteroids(), drawAsteroid);
+  std::for_each(scene->beginAsteroids(), scene->endAsteroids(),
+                std::bind(&AsteroidRenderer::draw, &asteroidRenderer, std::placeholders::_1));
+
   std::for_each(scene->beginShots(), scene->endShots(), drawShot);
 
 }

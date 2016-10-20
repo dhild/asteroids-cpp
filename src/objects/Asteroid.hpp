@@ -15,7 +15,7 @@ namespace objects {
     Asteroid();
     ~Asteroid();
 
-    void tick();
+    bool tick();
 
     glm::vec2 getCenter() const {
       return position;

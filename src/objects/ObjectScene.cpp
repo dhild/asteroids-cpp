@@ -37,6 +37,14 @@ namespace {
       return asteroids.end();
     }
 
+    virtual void addAsteroid() override {
+      asteroids.emplace_front();
+    }
+
+    virtual void destroyAsteroid(const Asteroid& ast) override {
+      asteroids.remove_if([&ast](const Asteroid& a) { return &a == &ast; });
+    }
+
     virtual LaserShot_citer beginShots() const override {
       return shots.cbegin();
     }
