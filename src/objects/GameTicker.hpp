@@ -9,6 +9,7 @@ namespace objects {
     virtual ~GameTicker() {};
 
     virtual void start() = 0;
+    virtual void signalClosed() = 0;
     virtual bool isOver() const = 0;
   };
 

@@ -10,10 +10,12 @@ namespace {
     std::thread tickThread;
     std::shared_ptr<ObjectScene> scene;
     std::atomic_bool over;
+    const Uint8* keyState;
   public:
-    SteadyGameTicker(std::shared_ptr<ObjectScene>& _scene) : scene(_scene) {
-      over = false;
-    }
+    SteadyGameTicker(std::shared_ptr<ObjectScene>& _scene)
+            : scene(_scene),
+              over(false),
+              keyState(SDL_GetKeyboardState(NULL)) {}
 
     virtual ~SteadyGameTicker() {}
 
@@ -24,9 +26,16 @@ namespace {
       tickThread.detach();
     }
 
+    virtual void signalClosed() override {
+      over = true;
+    }
+
     virtual bool isOver() const override {
       return over;
     }
+
+  private:
+    void tickPlayer();
   };
 }
 
@@ -35,15 +44,26 @@ std::shared_ptr<GameTicker> objects::createTicker(std::shared_ptr<ObjectScene>& 
 }
 
 void SteadyGameTicker::run() {
-  const Uint8* keyState = SDL_GetKeyboardState(NULL);
   using time_point = std::chrono::time_point<std::chrono::steady_clock>;
   const time_point start = std::chrono::steady_clock::now();
-  time_point last = start;
   while (!over) {
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-    scene->getPlayer().tick(keyState[SDL_SCANCODE_W], keyState[SDL_SCANCODE_A], keyState[SDL_SCANCODE_D]);
+    tickPlayer();
 
-    over = (bool) (keyState[SDL_SCANCODE_ESCAPE]);
+    if (keyState[SDL_SCANCODE_ESCAPE]) {
+      over = true;
+    }
+    if ((std::chrono::steady_clock::now() - start) >
+            std::chrono::seconds(50)) {
+      over = true;
+    }
   }
+}
+
+void SteadyGameTicker::tickPlayer() {
+  bool accelerate = keyState[SDL_SCANCODE_W];
+  bool rotateLeft = keyState[SDL_SCANCODE_A];
+  bool rotateRight = keyState[SDL_SCANCODE_D];
+  scene->getPlayer().tick(accelerate, rotateLeft, rotateRight);
 }

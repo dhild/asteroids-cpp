@@ -23,18 +23,12 @@ void Game::run() {
   window->render(scene);
   ticker->start();
 
-  std::atomic_bool done(false);
-  std::thread sleeper([&done] () {
-    std::this_thread::sleep_for(std::chrono::seconds(50));
-    done.store(true);
-  });
-  sleeper.detach();
-  while (!done && !ticker->isOver()) {
+  while (!ticker->isOver()) {
     SDL_Event event;
     while (SDL_WaitEventTimeout(&event, 5)) {
       if (event.type == SDL_WINDOWEVENT) {
         if (event.window.event == SDL_WINDOWEVENT_CLOSE) {
-          done = true;
+          ticker->signalClosed();
         }
         if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
           logger.information("Window resized to %d,%d", event.window.data1, event.window.data2);
