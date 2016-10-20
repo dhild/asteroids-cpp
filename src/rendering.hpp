@@ -2,7 +2,7 @@
 #define ASTEROIDS_RENDERING_HPP
 
 #include <memory>
-#include "objects.hpp"
+#include "objects/ObjectScene.hpp"
 
 namespace rendering {
 

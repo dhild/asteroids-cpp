@@ -2,7 +2,7 @@
 #define ASTEROIDS_PLAYERRENDERER_HPP
 
 #include "Shader.hpp"
-#include "../objects.hpp"
+#include "../objects/Player.hpp"
 
 namespace rendering {
   class PlayerRenderer {

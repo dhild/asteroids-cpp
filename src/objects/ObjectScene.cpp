@@ -1,5 +1,5 @@
 #include <thread>
-#include "../objects.hpp"
+#include "ObjectScene.hpp"
 
 using namespace objects;
 
@@ -21,19 +21,35 @@ namespace {
       return player;
     }
 
-    virtual std::forward_list<LaserShot>::const_iterator beginShots() const override {
+    virtual LaserShot_iter beginShots() override {
+      return shots.begin();
+    }
+
+    virtual LaserShot_iter endShots() override {
+      return shots.end();
+    }
+
+    virtual Asteroid_iter beginAsteroids() override {
+      return asteroids.begin();
+    }
+
+    virtual Asteroid_iter endAsteroids() override {
+      return asteroids.end();
+    }
+
+    virtual LaserShot_citer beginShots() const override {
       return shots.cbegin();
     }
 
-    virtual std::forward_list<LaserShot>::const_iterator endShots() const override {
+    virtual LaserShot_citer endShots() const override {
       return shots.cend();
     }
 
-    virtual std::forward_list<Asteroid>::const_iterator beginAsteroids() const override {
+    virtual Asteroid_citer beginAsteroids() const override {
       return asteroids.cbegin();
     }
 
-    virtual std::forward_list<Asteroid>::const_iterator endAsteroids() const override {
+    virtual Asteroid_citer endAsteroids() const override {
       return asteroids.cend();
     }
   };

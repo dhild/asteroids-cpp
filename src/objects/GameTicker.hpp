@@ -1,7 +1,7 @@
 #ifndef ASTEROIDS_GAMETICKER_HPP
 #define ASTEROIDS_GAMETICKER_HPP
 
-#include "../objects.hpp"
+#include "ObjectScene.hpp"
 
 namespace objects {
   class GameTicker {
