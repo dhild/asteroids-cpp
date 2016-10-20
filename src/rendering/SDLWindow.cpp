@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <Poco/Thread.h>
-#include <Poco/Logger.h>
 #include <thread>
+#include "../logging.hpp"
 #include "../rendering.hpp"
 #include "GLContextRenderer.hpp"
 
@@ -16,9 +16,8 @@ namespace {
   public:
     SDLWindow(const char* title, int width, int height)
         : window(nullptr), renderFlag(std::make_shared<std::atomic_bool>(true)) {
-      Poco::Logger& logger = Poco::Logger::get("rendering.SDLWindow");
       if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
-        logger.fatal(SDL_GetError());
+        log_fatal("rendering.SDLWindow", SDL_GetError());
         std::exit(1);
       }
       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -30,7 +29,7 @@ namespace {
                                 width, height,
                                 SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
       if (!window) {
-        logger.fatal(SDL_GetError());
+        log_fatal("rendering.SDLWindow", SDL_GetError());
         std::exit(1);
       }
     }

@@ -1,6 +1,7 @@
 set(SOURCE_FILES
         Game.cpp Game.hpp
         util.cpp util.hpp
+        logging.hpp
         objects.hpp
         rendering.hpp
         objects/GameTicker.cpp

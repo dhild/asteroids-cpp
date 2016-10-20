@@ -3,7 +3,7 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
-#include <Poco/Logger.h>
+#include "logging.hpp"
 #include "Game.hpp"
 #include "objects/GameTicker.hpp"
 
@@ -17,7 +17,6 @@ Game::~Game() {
 }
 
 void Game::run() {
-  Poco::Logger& logger = Poco::Logger::get("Game");
   auto scene = objects::createScene();
   auto ticker = objects::createTicker(scene);
   window->render(scene);
@@ -31,7 +30,7 @@ void Game::run() {
           ticker->signalClosed();
         }
         if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-          logger.information("Window resized to %d,%d", event.window.data1, event.window.data2);
+          log_info("Game", "Window resized to %d,%d", event.window.data1, event.window.data2);
         }
       }
     }

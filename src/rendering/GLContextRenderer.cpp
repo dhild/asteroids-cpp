@@ -1,8 +1,8 @@
-#include <Poco/Logger.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
 #include <mutex>
 #include <thread>
+#include "../logging.hpp"
 #include "GLContextRenderer.hpp"
 #include "PlayerRenderer.hpp"
 
@@ -56,8 +56,7 @@ void rendering::run_render_loop(SDL_Window* window,
 static SDL_GLContext initContext(SDL_Window* window) {
   SDL_GLContext glContext = SDL_GL_CreateContext(window);
   if (!glContext) {
-    Poco::Logger& logger = Poco::Logger::get("rendering.GLContextRenderer");
-    logger.fatal(SDL_GetError());
+    log_fatal("rendering.GLContextRenderer", SDL_GetError());
     throw std::runtime_error(SDL_GetError());
   }
   glbinding::Binding::initialize(false);

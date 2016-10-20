@@ -2,8 +2,13 @@
 #include <SDL.h>
 #include <atomic>
 #include "GameTicker.hpp"
+#include "../logging.hpp"
 
 using namespace objects;
+
+#define TICKS_PER_SECOND_VALUE 100
+const float GameTicker::ticks_per_second = TICKS_PER_SECOND_VALUE;
+using tick_duration = std::chrono::duration<long, std::ratio<1, TICKS_PER_SECOND_VALUE>>;
 
 namespace {
   class SteadyGameTicker : public GameTicker {
@@ -44,10 +49,9 @@ std::shared_ptr<GameTicker> objects::createTicker(std::shared_ptr<ObjectScene>& 
 }
 
 void SteadyGameTicker::run() {
-  using time_point = std::chrono::time_point<std::chrono::steady_clock>;
-  const time_point start = std::chrono::steady_clock::now();
+  const auto start = std::chrono::steady_clock::now();
   while (!over) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    const auto tickStart = std::chrono::steady_clock::now();
 
     tickPlayer();
 
@@ -57,6 +61,11 @@ void SteadyGameTicker::run() {
     if ((std::chrono::steady_clock::now() - start) >
             std::chrono::seconds(50)) {
       over = true;
+    }
+    const auto elapsed = std::chrono::steady_clock::now() - tickStart;
+    const auto remaining = tick_duration(1) - elapsed;
+    if (remaining > std::chrono::nanoseconds(50)) {
+      std::this_thread::sleep_for(remaining);
     }
   }
 }
