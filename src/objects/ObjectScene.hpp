@@ -1,7 +1,6 @@
 #ifndef ASTEROIDS_OBJECTSCENE_HPP
 #define ASTEROIDS_OBJECTSCENE_HPP
 
-#include <forward_list>
 #include <memory>
 #include "Asteroid.hpp"
 #include "LaserShot.hpp"
@@ -15,25 +14,15 @@ namespace objects {
     virtual Player& getPlayer() = 0;
     virtual const Player& getPlayer() const = 0;
 
-    typedef std::forward_list<LaserShot>::const_iterator LaserShot_citer;
-    typedef std::forward_list<Asteroid>::const_iterator Asteroid_citer;
-
-    virtual LaserShot_citer beginShots() const = 0;
-    virtual LaserShot_citer endShots() const = 0;
-    virtual Asteroid_citer beginAsteroids() const = 0;
-    virtual Asteroid_citer endAsteroids() const = 0;
+    virtual void each_asteroid(std::function<void(const Asteroid&)> func) const = 0;
+    virtual void each_asteroid(std::function<void(Asteroid&)> func) = 0;
+    virtual void each_shot(std::function<void(const LaserShot&)> func) const = 0;
+    virtual void each_shot(std::function<void(LaserShot&)> func) = 0;
 
     virtual void addAsteroid() = 0;
-    virtual void destroyAsteroid(const Asteroid& ast) = 0;
+    virtual void destroyAsteroid(const Asteroid* ast) = 0;
     virtual void addShot() = 0;
-    virtual void destroyShot(const LaserShot& shot) = 0;
-
-    typedef std::forward_list<LaserShot>::iterator LaserShot_iter;
-    typedef std::forward_list<Asteroid>::iterator Asteroid_iter;
-    virtual LaserShot_iter beginShots() = 0;
-    virtual LaserShot_iter endShots() = 0;
-    virtual Asteroid_iter beginAsteroids() = 0;
-    virtual Asteroid_iter endAsteroids() = 0;
+    virtual void destroyShot(const LaserShot* shot) = 0;
   };
 
   std::shared_ptr<ObjectScene> createScene();

@@ -84,11 +84,9 @@ void GLContextHandler::drawOnce(std::shared_ptr<const ObjectScene> scene) {
 
   playerRenderer.draw(scene->getPlayer());
 
-  std::for_each(scene->beginAsteroids(), scene->endAsteroids(),
-                std::bind(&AsteroidRenderer::draw, &asteroidRenderer, std::placeholders::_1));
+  scene->each_asteroid(std::bind(&AsteroidRenderer::draw, &asteroidRenderer, std::placeholders::_1));
 
-  std::for_each(scene->beginShots(), scene->endShots(),
-                std::bind(&LaserShotRenderer::draw, &laserShotRenderer, std::placeholders::_1));
+  scene->each_shot(std::bind(&LaserShotRenderer::draw, &laserShotRenderer, std::placeholders::_1));
 
 }
 

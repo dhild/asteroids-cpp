@@ -92,15 +92,18 @@ void SteadyGameTicker::tickPlayer() {
 void SteadyGameTicker::tickAsteroids() {
   int numAsteroids = 0;
   {
-    auto it = scene->beginAsteroids(),
-            end = scene->endAsteroids();
-    while (it != end) {
-      Asteroid& a = *it;
-      it++;
-      if (!a.tick()) {
-        scene->destroyAsteroid(a);
+    std::vector<Asteroid*> doomed;
+    scene->each_asteroid([&](Asteroid& ast) {
+      bool keep = ast.tick();
+      if (!keep) {
+        doomed.push_back(&ast);
+      } else {
+        numAsteroids++;
       }
-    }
+    });
+    std::for_each(doomed.cbegin(), doomed.cend(), [&](const Asteroid* a) {
+      scene->destroyAsteroid(a);
+    });
   }
   ++ticks_since_asteroid_added;
   if (ticks_since_asteroid_added > min_ticks_between_new_asteroids &&
@@ -112,19 +115,20 @@ void SteadyGameTicker::tickAsteroids() {
 
 void SteadyGameTicker::tickShots() {
   {
-    auto it = scene->beginShots(),
-            end = scene->endShots();
-    while (it != end) {
-      LaserShot& s = *it;
-      it++;
-      if (!s.tick()) {
-        scene->destroyShot(s);
+    std::vector<LaserShot*> doomed;
+    scene->each_shot([&](LaserShot& shot) {
+      bool keep = shot.tick();
+      if (!keep) {
+        doomed.push_back(&shot);
       }
-    }
+    });
+    std::for_each(doomed.cbegin(), doomed.cend(), [&](const LaserShot* l) {
+      scene->destroyShot(l);
+    });
   }
   ++ticks_since_shot_fired;
   if (keyState[SDL_SCANCODE_SPACE] &&
-          ticks_since_shot_fired > min_ticks_between_new_shots) {
+      ticks_since_shot_fired > min_ticks_between_new_shots) {
     scene->addShot();
     ticks_since_shot_fired = 0;
   }
