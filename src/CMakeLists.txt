@@ -19,6 +19,8 @@ set(SOURCE_FILES
         rendering/PlayerRenderer.hpp
         rendering/AsteroidRenderer.cpp
         rendering/AsteroidRenderer.hpp
+        rendering/LaserShotRenderer.cpp
+        rendering/LaserShotRenderer.hpp
         rendering/SDLWindow.cpp
         rendering/Shader.cpp
         rendering/Shader.hpp

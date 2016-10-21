@@ -11,6 +11,8 @@ namespace objects {
     glm::vec2 velocity;
 
   public:
+    static const float max_velocity;
+
     Player();
     ~Player();
 

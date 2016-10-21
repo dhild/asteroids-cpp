@@ -1,11 +1,25 @@
 #ifndef ASTEROIDS_LASERSHOT_HPP
 #define ASTEROIDS_LASERSHOT_HPP
 
+#include <glm/glm.hpp>
+
 namespace objects {
 
+  class Player;
+
   class LaserShot {
+    glm::vec2 position;
+    const glm::vec2 velocity;
+
   public:
-    virtual ~LaserShot() {};
+    LaserShot(const Player& player);
+    ~LaserShot();
+
+    bool tick();
+
+    glm::vec2 getCenter() const {
+      return position;
+    }
   };
 
 }

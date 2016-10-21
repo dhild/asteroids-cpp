@@ -20,5 +20,4 @@ namespace rendering {
   };
 }
 
-
 #endif //ASTEROIDS_ASTEROIDRENDERER_HPP

@@ -6,9 +6,10 @@
 using namespace objects;
 
 static const float pi = std::acos(-1.0f);
-static const float max_velocity_squared = 0.3333f / GameTicker::ticks_per_second;
-static const float rotation_rate = 0.9f / GameTicker::ticks_per_second;
-static const float acceleration_rate = 0.05f / GameTicker::ticks_per_second;
+const float Player::max_velocity = 2.0f / GameTicker::ticks_per_second;
+static const float max_velocity_squared = Player::max_velocity * Player::max_velocity;
+static const float rotation_rate = 1.0f / GameTicker::ticks_per_second;
+static const float acceleration_rate = 0.04f / GameTicker::ticks_per_second;
 static const float deceleration_rate = 1.0f - (1.0f / GameTicker::ticks_per_second);
 
 Player::Player() : position(0, 0), orientation(0), velocity(0, 0) {}

@@ -25,6 +25,8 @@ namespace objects {
 
     virtual void addAsteroid() = 0;
     virtual void destroyAsteroid(const Asteroid& ast) = 0;
+    virtual void addShot() = 0;
+    virtual void destroyShot(const LaserShot& shot) = 0;
 
     typedef std::forward_list<LaserShot>::iterator LaserShot_iter;
     typedef std::forward_list<Asteroid>::iterator Asteroid_iter;

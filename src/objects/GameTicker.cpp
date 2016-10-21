@@ -12,6 +12,7 @@ using tick_duration = std::chrono::duration<long, std::ratio<1, TICKS_PER_SECOND
 
 static const std::uint64_t min_ticks_between_new_asteroids = TICKS_PER_SECOND_VALUE >> 1;
 static const int desired_asteroid_count = 10;
+static const std::uint64_t min_ticks_between_new_shots = TICKS_PER_SECOND_VALUE / 5;
 
 namespace {
   class SteadyGameTicker : public GameTicker {
@@ -21,6 +22,7 @@ namespace {
     const Uint8* keyState;
 
     unsigned long ticks_since_asteroid_added;
+    unsigned long ticks_since_shot_fired;
   public:
     SteadyGameTicker(std::shared_ptr<ObjectScene>& _scene)
             : scene(_scene),
@@ -47,6 +49,7 @@ namespace {
   private:
     void tickPlayer();
     void tickAsteroids();
+    void tickShots();
   };
 }
 
@@ -62,6 +65,7 @@ void SteadyGameTicker::run() {
 
     tickPlayer();
     tickAsteroids();
+    tickShots();
 
     if (keyState[SDL_SCANCODE_ESCAPE]) {
       over = true;
@@ -91,20 +95,37 @@ void SteadyGameTicker::tickAsteroids() {
     auto it = scene->beginAsteroids(),
             end = scene->endAsteroids();
     while (it != end) {
-      if (it->tick()) {
-        numAsteroids++;
-        it++;
-      } else {
-        const Asteroid& a = *it;
-        it++;
+      Asteroid& a = *it;
+      it++;
+      if (!a.tick()) {
         scene->destroyAsteroid(a);
       }
     }
   }
   ++ticks_since_asteroid_added;
   if (ticks_since_asteroid_added > min_ticks_between_new_asteroids &&
-          desired_asteroid_count > numAsteroids) {
+      desired_asteroid_count > numAsteroids) {
     scene->addAsteroid();
     ticks_since_asteroid_added = 0;
+  }
+}
+
+void SteadyGameTicker::tickShots() {
+  {
+    auto it = scene->beginShots(),
+            end = scene->endShots();
+    while (it != end) {
+      LaserShot& s = *it;
+      it++;
+      if (!s.tick()) {
+        scene->destroyShot(s);
+      }
+    }
+  }
+  ++ticks_since_shot_fired;
+  if (keyState[SDL_SCANCODE_SPACE] &&
+          ticks_since_shot_fired > min_ticks_between_new_shots) {
+    scene->addShot();
+    ticks_since_shot_fired = 0;
   }
 }
