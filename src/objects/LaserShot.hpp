@@ -17,7 +17,7 @@ namespace objects {
 
     bool tick();
 
-    glm::vec2 getCenter() const {
+    glm::vec2 center() const {
       return position;
     }
   };

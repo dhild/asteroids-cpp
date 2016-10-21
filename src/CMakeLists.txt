@@ -13,6 +13,8 @@ set(SOURCE_FILES
         objects/Asteroid.hpp
         objects/LaserShot.cpp
         objects/LaserShot.hpp
+        objects/collision.cpp
+        objects/collision.hpp
         rendering/GLContextRenderer.cpp
         rendering/GLContextRenderer.hpp
         rendering/PlayerRenderer.cpp

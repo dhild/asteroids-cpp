@@ -7,7 +7,7 @@ namespace objects {
 
   class Player {
     glm::vec2 position;
-    float orientation;
+    float orientationAngle;
     glm::vec2 velocity;
 
   public:
@@ -18,12 +18,12 @@ namespace objects {
 
     void tick(bool accelerate, bool rotateLeft, bool rotateRight);
 
-    glm::vec2 getCenter() const {
+    glm::vec2 center() const {
       return position;
     }
 
-    float getOrientation() const {
-      return orientation;
+    float orientation() const {
+      return orientationAngle;
     }
   };
 

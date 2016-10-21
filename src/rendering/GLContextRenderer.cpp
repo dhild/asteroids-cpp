@@ -53,7 +53,6 @@ void rendering::run_render_loop(SDL_Window* window,
     glContext.drawOnce(scene);
 
     SDL_GL_SwapWindow(window);
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
 }
 
@@ -63,6 +62,7 @@ static SDL_GLContext initContext(SDL_Window* window) {
     log_fatal("rendering.GLContextRenderer", SDL_GetError());
     throw std::runtime_error(SDL_GetError());
   }
+  SDL_GL_SetSwapInterval(1);
   glbinding::Binding::initialize(false);
   return glContext;
 }
@@ -82,7 +82,7 @@ static void clearDrawing() {
 void GLContextHandler::drawOnce(std::shared_ptr<const ObjectScene> scene) {
   clearDrawing();
 
-  playerRenderer.draw(scene->getPlayer());
+  playerRenderer.draw(scene->player());
 
   scene->each_asteroid(std::bind(&AsteroidRenderer::draw, &asteroidRenderer, std::placeholders::_1));
 

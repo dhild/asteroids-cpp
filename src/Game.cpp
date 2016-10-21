@@ -17,7 +17,7 @@ Game::~Game() {
 }
 
 void Game::run() {
-  auto scene = objects::createScene();
+  auto scene = objects::create_scene();
   auto ticker = objects::createTicker(scene);
   window->render(scene);
   ticker->start();

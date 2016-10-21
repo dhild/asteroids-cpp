@@ -64,7 +64,7 @@ void rendering::LaserShotRenderer::draw(const LaserShot& shot) const {
   shader.activate();
   gl::glBindVertexArray(vao);
 
-  glm::vec2 pos = shot.getCenter();
+  glm::vec2 pos = shot.center();
 
   glm::mat4 mat(1.0f);
 

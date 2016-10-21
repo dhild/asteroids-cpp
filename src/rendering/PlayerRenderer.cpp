@@ -63,8 +63,8 @@ void PlayerRenderer::draw(const Player& player) const {
   playerShader.activate();
   gl::glBindVertexArray(vao);
 
-  glm::vec2 pos = player.getCenter();
-  float orientation = player.getOrientation();
+  glm::vec2 pos = player.center();
+  float orientation = player.orientation();
 
   glm::mat4 mat(1.0f);
 

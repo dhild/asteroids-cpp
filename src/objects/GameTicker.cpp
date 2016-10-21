@@ -3,6 +3,7 @@
 #include <atomic>
 #include "GameTicker.hpp"
 #include "../logging.hpp"
+#include "collision.hpp"
 
 using namespace objects;
 
@@ -67,6 +68,14 @@ void SteadyGameTicker::run() {
     tickAsteroids();
     tickShots();
 
+    if (player_collided_with_asteroid(*scene)) {
+      log_info("objects.GameTicker", "Player hit by asteroid!");
+    }
+    const AsteroidHit check = shot_collided_with_asteroid(*scene);
+    if (check.hit) {
+      log_info("objects.GameTicker", "Asteroid hit by shot!");
+    }
+
     if (keyState[SDL_SCANCODE_ESCAPE]) {
       over = true;
     }
@@ -86,7 +95,7 @@ void SteadyGameTicker::tickPlayer() {
   bool accelerate = keyState[SDL_SCANCODE_W];
   bool rotateLeft = keyState[SDL_SCANCODE_A];
   bool rotateRight = keyState[SDL_SCANCODE_D];
-  scene->getPlayer().tick(accelerate, rotateLeft, rotateRight);
+  scene->player().tick(accelerate, rotateLeft, rotateRight);
 }
 
 void SteadyGameTicker::tickAsteroids() {
@@ -102,13 +111,13 @@ void SteadyGameTicker::tickAsteroids() {
       }
     });
     std::for_each(doomed.cbegin(), doomed.cend(), [&](const Asteroid* a) {
-      scene->destroyAsteroid(a);
+      scene->destroy_asteroid(a);
     });
   }
   ++ticks_since_asteroid_added;
   if (ticks_since_asteroid_added > min_ticks_between_new_asteroids &&
       desired_asteroid_count > numAsteroids) {
-    scene->addAsteroid();
+    scene->add_asteroid();
     ticks_since_asteroid_added = 0;
   }
 }
@@ -123,13 +132,13 @@ void SteadyGameTicker::tickShots() {
       }
     });
     std::for_each(doomed.cbegin(), doomed.cend(), [&](const LaserShot* l) {
-      scene->destroyShot(l);
+      scene->destroy_shot(l);
     });
   }
   ++ticks_since_shot_fired;
   if (keyState[SDL_SCANCODE_SPACE] &&
       ticks_since_shot_fired > min_ticks_between_new_shots) {
-    scene->addShot();
+    scene->add_shot();
     ticks_since_shot_fired = 0;
   }
 }

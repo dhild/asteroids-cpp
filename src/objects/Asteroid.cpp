@@ -37,7 +37,7 @@ static float randomRotation() {
 
 Asteroid::Asteroid()
         : position(randomStartPos(), randomStartPos()),
-          orientation(randomOrientation()),
+          orientationAngle(randomOrientation()),
           velocity(randomVelocity(), randomVelocity()),
           rotationRate(randomRotation()) {}
 
@@ -57,6 +57,6 @@ bool Asteroid::tick() {
     return false;
   }
 
-  orientation += rotationRate;
+  orientationAngle += rotationRate;
   return true;
 }

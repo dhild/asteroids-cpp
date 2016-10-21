@@ -87,8 +87,8 @@ void rendering::AsteroidRenderer::draw(const Asteroid& asteroid) const {
   shader.activate();
   gl::glBindVertexArray(vao);
 
-  glm::vec2 pos = asteroid.getCenter();
-  float orientation = asteroid.getOrientation();
+  glm::vec2 pos = asteroid.center();
+  float orientation = asteroid.orientation();
 
   glm::mat4 mat(1.0f);
 

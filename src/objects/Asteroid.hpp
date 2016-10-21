@@ -7,7 +7,7 @@ namespace objects {
 
   class Asteroid {
     glm::vec2 position;
-    float orientation;
+    float orientationAngle;
     const glm::vec2 velocity;
     const float rotationRate;
 
@@ -17,12 +17,12 @@ namespace objects {
 
     bool tick();
 
-    glm::vec2 getCenter() const {
+    glm::vec2 center() const {
       return position;
     }
 
-    float getOrientation() const {
-      return orientation;
+    float orientation() const {
+      return orientationAngle;
     }
   };
 
