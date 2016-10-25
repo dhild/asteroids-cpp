@@ -12,7 +12,6 @@ Game::Game(const char* title) : window(rendering::createWindow(title, 1000, 800)
 }
 
 Game::~Game() {
-  window->stop();
   SDL_QuitSubSystem(SDL_INIT_EVENTS);
 }
 
@@ -35,4 +34,5 @@ void Game::run() {
       }
     }
   }
+  window->stop();
 }

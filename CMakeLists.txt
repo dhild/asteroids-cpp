@@ -30,6 +30,8 @@ include(cmake/settings.cmake)
 config_compiler_and_linker()
 enable_testing()
 
+find_font_file(font_file)
+add_definitions(-DASTEROIDS_FONT_FILE="${font_file}")
 add_definitions(-DASTEROIDS_BASE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_subdirectory(src)

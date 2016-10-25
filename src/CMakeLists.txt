@@ -26,6 +26,8 @@ set(SOURCE_FILES
         rendering/SDLWindow.cpp
         rendering/Shader.cpp
         rendering/Shader.hpp
+        rendering/SimpleTextOverlay.cpp
+        rendering/SimpleTextOverlay.hpp
         )
 
 cxx_library(asteroids_lib ${SOURCE_FILES})

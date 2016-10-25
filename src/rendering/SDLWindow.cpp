@@ -4,6 +4,7 @@
 #include "../logging.hpp"
 #include "../rendering.hpp"
 #include "GLContextRenderer.hpp"
+#include "SimpleTextOverlay.hpp"
 
 using namespace rendering;
 
@@ -52,6 +53,11 @@ namespace {
       if (renderingThread.joinable()) {
         renderingThread.join();
       }
+    }
+
+    virtual std::shared_ptr<TextOverlay> textOverlay() override {
+      // TODO: Hold on to this reference so we can draw it later
+      return create_text_overlay();
     }
   };
 }

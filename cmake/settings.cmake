@@ -52,3 +52,10 @@ function(cxx_test name libs)
     target_link_libraries(${name} gtest_main)
     add_test(${name} ${name})
 endfunction()
+
+
+function(find_font_file outputvar)
+    execute_process(
+            COMMAND fc-match --format=%{file} LiberationMono-Regular.ttf
+            OUTPUT_VARIABLE ${outputvar})
+endfunction()
