@@ -74,6 +74,8 @@ void SteadyGameTicker::run() {
     const AsteroidHit check = shot_collided_with_asteroid(*scene);
     if (check.hit) {
       log_info("objects.GameTicker", "Asteroid hit by shot!");
+      scene->destroy_asteroid(check.asteroid);
+      scene->destroy_shot(check.laserShot);
     }
 
     if (keyState[SDL_SCANCODE_ESCAPE]) {

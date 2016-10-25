@@ -52,3 +52,7 @@ void Player::tick(bool accelerate, bool rotateLeft, bool rotateRight) {
     }
   }
 }
+
+float Player::size() const {
+  return 1.0f / 20.0f;
+}

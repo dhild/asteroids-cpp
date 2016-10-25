@@ -44,6 +44,10 @@ Asteroid::Asteroid()
 Asteroid::~Asteroid() {
 }
 
+float Asteroid::size() const {
+  return 1.2f / 20.f;
+}
+
 bool Asteroid::tick() {
   position += velocity;
   if (position.x > disappear_distance) {

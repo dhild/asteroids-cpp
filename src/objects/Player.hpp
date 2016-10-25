@@ -18,6 +18,8 @@ namespace objects {
 
     void tick(bool accelerate, bool rotateLeft, bool rotateRight);
 
+    float size() const;
+
     glm::vec2 center() const {
       return position;
     }
