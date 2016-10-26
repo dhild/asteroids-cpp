@@ -40,8 +40,8 @@ static const gl::GLubyte indexData[] = {
 };
 
 rendering::AsteroidRenderer::AsteroidRenderer()
-        : shader(util::loadFile("Player.vert"),
-                 util::loadFile("Player.frag")),
+        : shader(util::loadFile("Asteroid.vert"),
+                 util::loadFile("Asteroid.frag")),
           unifClipMatrix(shader.getUniformLocation("toClipMatrix")),
           vertexBufferObject(0),
           indexBufferObject(0),

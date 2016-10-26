@@ -15,7 +15,7 @@ static const gl::GLubyte indexData[] = {
 
 rendering::LaserShotRenderer::LaserShotRenderer()
         : shader(util::loadFile("Shot.vert"),
-                 util::loadFile("Player.frag")),
+                 util::loadFile("Shot.frag")),
           unifClipMatrix(shader.getUniformLocation("toClipMatrix")),
           unifPointSize(shader.getUniformLocation("pointSize")),
           vertexBufferObject(0),

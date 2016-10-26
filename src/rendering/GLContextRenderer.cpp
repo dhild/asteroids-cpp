@@ -62,7 +62,7 @@ static SDL_GLContext initContext(SDL_Window* window) {
     log_fatal("rendering.GLContextRenderer", SDL_GetError());
     throw std::runtime_error(SDL_GetError());
   }
-  SDL_GL_SetSwapInterval(1);
+  SDL_GL_SetSwapInterval(0);
   glbinding::Binding::initialize(false);
   return glContext;
 }
