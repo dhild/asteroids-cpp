@@ -59,7 +59,6 @@ std::shared_ptr<GameTicker> objects::createTicker(std::shared_ptr<ObjectScene>& 
 }
 
 void SteadyGameTicker::run() {
-  const auto start = std::chrono::steady_clock::now();
   ticks_since_asteroid_added = 0;
   while (!over) {
     const auto tickStart = std::chrono::steady_clock::now();
@@ -79,10 +78,6 @@ void SteadyGameTicker::run() {
     }
 
     if (keyState[SDL_SCANCODE_ESCAPE]) {
-      over = true;
-    }
-    if ((std::chrono::steady_clock::now() - start) >
-        std::chrono::seconds(50)) {
       over = true;
     }
     const auto elapsed = std::chrono::steady_clock::now() - tickStart;
