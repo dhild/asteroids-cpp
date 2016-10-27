@@ -3,14 +3,16 @@
 
 #include "rendering.hpp"
 
-class Game {
-  std::shared_ptr<rendering::Window> window;
+namespace asteroids {
+  class Game {
+    std::shared_ptr<asteroids::Window> window;
 
-public:
-  explicit Game(const char* title);
-  ~Game();
+  public:
+    explicit Game(const char* title);
+    ~Game();
 
-  void run();
-};
+    void run();
+  };
+}
 
 #endif //ASTEROIDS_GAME_HPP

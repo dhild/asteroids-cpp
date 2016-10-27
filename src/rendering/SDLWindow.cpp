@@ -4,9 +4,9 @@
 #include "../logging.hpp"
 #include "../rendering.hpp"
 #include "GLContextRenderer.hpp"
-#include "SimpleTextOverlay.hpp"
 
-using namespace rendering;
+using namespace asteroids;
+using namespace asteroids::rendering;
 
 namespace {
   class SDLWindow : public Window {
@@ -16,7 +16,7 @@ namespace {
 
   public:
     SDLWindow(const char* title, int width, int height)
-        : window(nullptr), renderFlag(std::make_shared<std::atomic_bool>(true)) {
+            : window(nullptr), renderFlag(std::make_shared<std::atomic_bool>(true)) {
       if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
         log_fatal("rendering.SDLWindow", SDL_GetError());
         std::exit(1);
@@ -43,10 +43,7 @@ namespace {
       SDL_QuitSubSystem(SDL_INIT_VIDEO);
     }
 
-    virtual void render(std::shared_ptr<const objects::ObjectScene> scene) override {
-      renderFlag->store(true);
-      renderingThread = std::thread(rendering::run_render_loop, window, scene, renderFlag);
-    }
+    virtual void render(std::shared_ptr<const ObjectScene> scene) override;
 
     virtual void stop() override {
       renderFlag->store(false);
@@ -54,14 +51,37 @@ namespace {
         renderingThread.join();
       }
     }
-
-    virtual std::shared_ptr<TextOverlay> textOverlay() override {
-      // TODO: Hold on to this reference so we can draw it later
-      return create_text_overlay();
-    }
   };
+
+  void run_render_loop(SDL_Window* window,
+                       std::shared_ptr<const ObjectScene> scene,
+                       std::shared_ptr<std::atomic_bool> running) {
+    auto glContext = create_renderer(window);
+
+    int lastWidth = 0, lastHeight = 0;
+    while ((*running).load()) {
+      int width, height;
+      SDL_GL_GetDrawableSize(window, &width, &height);
+
+      if (width != lastWidth || height != lastHeight) {
+        lastWidth = width;
+        lastHeight = height;
+
+        glContext->resized(width, height);
+      }
+
+      glContext->draw(*scene);
+
+      SDL_GL_SwapWindow(window);
+    }
+  }
+
+  void SDLWindow::render(std::shared_ptr<const ObjectScene> scene) {
+    renderFlag->store(true);
+    renderingThread = std::thread(run_render_loop, window, scene, renderFlag);
+  }
 }
 
-std::shared_ptr<Window> rendering::createWindow(const char* name, int width, int height) {
+std::shared_ptr<Window> asteroids::create_window(const char* name, int width, int height) {
   return std::make_shared<SDLWindow>(name, width, height);
 }

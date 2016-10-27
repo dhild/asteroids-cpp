@@ -2,6 +2,8 @@
 #include <vector>
 #include "Shader.hpp"
 
+using asteroids::rendering::Shader;
+
 namespace {
   class GLShader {
   public:
@@ -37,7 +39,7 @@ namespace {
   };
 }
 
-rendering::Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
+Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
         : program(0) {
   GLShader vertexShader(gl::GL_VERTEX_SHADER, vertexSource);
   GLShader fragmentShader(gl::GL_FRAGMENT_SHADER, fragmentSource);
@@ -63,20 +65,20 @@ rendering::Shader::Shader(const std::string& vertexSource, const std::string& fr
   }
 }
 
-rendering::Shader::~Shader() {
+Shader::~Shader() {
   if (program) {
     gl::glDeleteShader(program);
   }
 }
 
-void rendering::Shader::activate() const {
+void Shader::activate() const {
   gl::glUseProgram(program);
 }
 
-void rendering::Shader::deactivate() const {
+void Shader::deactivate() const {
   gl::glUseProgram(0);
 }
 
-gl::GLint rendering::Shader::getUniformLocation(const char* name) const {
+gl::GLint Shader::getUniformLocation(const char* name) const {
   return gl::glGetUniformLocation(program, name);
 }

@@ -5,26 +5,17 @@
 #include <string>
 #include "objects/ObjectScene.hpp"
 
-namespace rendering {
-
-  class TextOverlay {
-  public:
-    virtual ~TextOverlay() {}
-
-    virtual void update(const std::string& newText) = 0;
-  };
+namespace asteroids {
 
   class Window {
   public:
     virtual ~Window() {};
 
-    virtual void render(std::shared_ptr<const objects::ObjectScene> scene) = 0;
+    virtual void render(std::shared_ptr<const ObjectScene> scene) = 0;
     virtual void stop() = 0;
-
-    virtual std::shared_ptr<TextOverlay> textOverlay() = 0;
   };
 
-  std::shared_ptr<Window> createWindow(const char* name, int width, int height);
+  std::shared_ptr<Window> create_window(const char* name, int width, int height);
 }
 
 #endif //ASTEROIDS_RENDERING_HPP

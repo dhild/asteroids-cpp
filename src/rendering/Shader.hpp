@@ -4,22 +4,24 @@
 #include <string>
 #include <glbinding/gl/types.h>
 
-namespace rendering {
-  class Shader {
-    gl::GLuint program;
-  public:
-    Shader(const Shader&) = delete;
-    Shader& operator=(const Shader&) = delete;
+namespace asteroids {
+  namespace rendering {
+    class Shader {
+      gl::GLuint program;
+    public:
+      Shader(const Shader&) = delete;
+      Shader& operator=(const Shader&) = delete;
 
-    explicit Shader(const std::string& vertexSource,
-                    const std::string& fragmentSource);
-    ~Shader();
+      explicit Shader(const std::string& vertexSource,
+                      const std::string& fragmentSource);
+      ~Shader();
 
-    void activate() const;
-    void deactivate() const;
+      void activate() const;
+      void deactivate() const;
 
-    gl::GLint getUniformLocation(const char* name) const;
-  };
+      gl::GLint getUniformLocation(const char* name) const;
+    };
+  }
 }
 
 

@@ -3,9 +3,8 @@
 #include <atomic>
 #include "GameTicker.hpp"
 #include "../logging.hpp"
-#include "collision.hpp"
 
-using namespace objects;
+using namespace asteroids;
 
 #define TICKS_PER_SECOND_VALUE 100
 const float GameTicker::ticks_per_second = TICKS_PER_SECOND_VALUE;
@@ -54,7 +53,7 @@ namespace {
   };
 }
 
-std::shared_ptr<GameTicker> objects::createTicker(std::shared_ptr<ObjectScene>& scene) {
+std::shared_ptr<GameTicker> asteroids::create_ticker(std::shared_ptr<ObjectScene>& scene) {
   return std::make_shared<SteadyGameTicker>(scene);
 }
 
@@ -67,15 +66,15 @@ void SteadyGameTicker::run() {
     tickAsteroids();
     tickShots();
 
-    if (player_collided_with_asteroid(*scene)) {
-      log_info("objects.GameTicker", "Player hit by asteroid!");
-    }
-    const AsteroidHit check = shot_collided_with_asteroid(*scene);
-    if (check.hit) {
-      log_info("objects.GameTicker", "Asteroid hit by shot!");
-      scene->destroy_asteroid(check.asteroid);
-      scene->destroy_shot(check.laserShot);
-    }
+//    if (player_collided_with_asteroid(*scene)) {
+//      log_info("objects.GameTicker", "Player hit by asteroid!");
+//    }
+//    const AsteroidHit check = shot_collided_with_asteroid(*scene);
+//    if (check.hit) {
+//      log_info("objects.GameTicker", "Asteroid hit by shot!");
+//      scene->destroy_asteroid(check.asteroid);
+//      scene->destroy_shot(check.laserShot);
+//    }
 
     if (keyState[SDL_SCANCODE_ESCAPE]) {
       over = true;
@@ -121,14 +120,14 @@ void SteadyGameTicker::tickAsteroids() {
 
 void SteadyGameTicker::tickShots() {
   {
-    std::vector<LaserShot*> doomed;
-    scene->each_shot([&](LaserShot& shot) {
+    std::vector<Shot*> doomed;
+    scene->each_shot([&](Shot& shot) {
       bool keep = shot.tick();
       if (!keep) {
         doomed.push_back(&shot);
       }
     });
-    std::for_each(doomed.cbegin(), doomed.cend(), [&](const LaserShot* l) {
+    std::for_each(doomed.cbegin(), doomed.cend(), [&](const Shot* l) {
       scene->destroy_shot(l);
     });
   }

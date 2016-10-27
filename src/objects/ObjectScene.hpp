@@ -2,11 +2,11 @@
 #define ASTEROIDS_OBJECTSCENE_HPP
 
 #include <memory>
-#include "Asteroid.hpp"
-#include "LaserShot.hpp"
-#include "Player.hpp"
+#include "../asteroid/Asteroid.hpp"
+#include "../shot/Shot.hpp"
+#include "../player/Player.hpp"
 
-namespace objects {
+namespace asteroids {
   class ObjectScene {
   public:
     virtual ~ObjectScene() {};
@@ -16,13 +16,13 @@ namespace objects {
 
     virtual void each_asteroid(std::function<void(const Asteroid&)> func) const = 0;
     virtual void each_asteroid(std::function<void(Asteroid&)> func) = 0;
-    virtual void each_shot(std::function<void(const LaserShot&)> func) const = 0;
-    virtual void each_shot(std::function<void(LaserShot&)> func) = 0;
+    virtual void each_shot(std::function<void(const Shot&)> func) const = 0;
+    virtual void each_shot(std::function<void(Shot&)> func) = 0;
 
     virtual void add_asteroid() = 0;
     virtual void destroy_asteroid(const Asteroid* ast) = 0;
     virtual void add_shot() = 0;
-    virtual void destroy_shot(const LaserShot* shot) = 0;
+    virtual void destroy_shot(const Shot* shot) = 0;
   };
 
   std::shared_ptr<ObjectScene> create_scene();

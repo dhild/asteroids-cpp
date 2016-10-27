@@ -1,19 +1,22 @@
-#include <glbinding/gl/gl.h>
 #include <glm/gtc/type_ptr.hpp>
+#include "../logging.hpp"
 #include "../util.hpp"
+#include "DrawablePlayer.hpp"
 #include "PlayerRenderer.hpp"
 
-using namespace rendering;
-using objects::Player;
+using namespace asteroids;
+using namespace asteroids::player;
 
-static const float vertexData[] = {
-        0.0f, 1.0f,
-        0.5f, -1.0f,
-        -0.5f, -1.0f
-};
-static const gl::GLubyte indexData[] = {
-        0, 1, 2
-};
+namespace {
+  const float vertexData[] = {
+          DrawablePlayer::point_front.x, DrawablePlayer::point_front.y,
+          DrawablePlayer::point_right.x, DrawablePlayer::point_right.y,
+          DrawablePlayer::point_left.x, DrawablePlayer::point_left.y
+  };
+  const gl::GLubyte indexData[] = {
+          0, 1, 2
+  };
+}
 
 PlayerRenderer::PlayerRenderer()
         : playerShader(util::loadFile("Player.vert"),
@@ -59,35 +62,11 @@ PlayerRenderer::~PlayerRenderer() {
   }
 }
 
-void PlayerRenderer::draw(const Player& player) const {
+void PlayerRenderer::render(const Player& player) const {
   playerShader.activate();
   gl::glBindVertexArray(vao);
 
-  glm::vec2 pos = player.center();
-  float orientation = player.orientation();
-
-  glm::mat4 mat(1.0f);
-
-  // Translate
-  mat[3].x = pos.x;
-  mat[3].y = pos.y;
-
-  // Scale
-  glm::mat4 tmp(1.0f);
-  float scale = 1.0f / 20.0f;
-  tmp[0].x *= scale;
-  tmp[1].y *= scale;
-  mat *= tmp;
-
-  // Rotate
-  tmp = glm::mat4(1.0f);
-  float oCos = std::cos(-orientation);
-  float oSin = std::sin(-orientation);
-  tmp[0].x *= oCos;
-  tmp[0].y = oSin;
-  tmp[1].x = -oSin;
-  tmp[1].y *= oCos;
-  mat *= tmp;
+  glm::mat4 mat = player.matrix();
 
   gl::glUniformMatrix4fv(unifClipMatrix, 1, gl::GL_FALSE, glm::value_ptr(mat));
 

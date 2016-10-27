@@ -7,12 +7,19 @@
 
 #include "../rendering.hpp"
 
-namespace rendering {
+namespace asteroids {
+  namespace rendering {
 
-  void run_render_loop(SDL_Window* window,
-                       std::shared_ptr<const objects::ObjectScene> scene,
-                       std::shared_ptr<std::atomic_bool> running_flag);
+    class WindowRenderer {
+    public:
+      virtual ~WindowRenderer() {}
 
+      virtual void resized(int width, int height) const = 0;
+      virtual void draw(const ObjectScene& scene) const = 0;
+    };
+
+    std::unique_ptr<WindowRenderer> create_renderer(SDL_Window* window);
+  }
 }
 
 #endif //ASTEROIDS_GLCONTEXTRENDERER_HPP

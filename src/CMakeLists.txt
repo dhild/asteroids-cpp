@@ -7,22 +7,23 @@ set(SOURCE_FILES
         objects/GameTicker.hpp
         objects/ObjectScene.cpp
         objects/ObjectScene.hpp
-        objects/Player.cpp
-        objects/Player.hpp
-        objects/Asteroid.cpp
-        objects/Asteroid.hpp
-        objects/LaserShot.cpp
-        objects/LaserShot.hpp
-        objects/collision.cpp
-        objects/collision.hpp
+        player/Player.hpp
+        player/DrawablePlayer.cpp
+        player/DrawablePlayer.hpp
+        player/PlayerRenderer.cpp
+        player/PlayerRenderer.hpp
+        asteroid/Asteroid.hpp
+        asteroid/CircularAsteroid.cpp
+        asteroid/CircularAsteroid.hpp
+        asteroid/AsteroidRenderer.cpp
+        asteroid/AsteroidRenderer.hpp
+        shot/Shot.hpp
+        shot/LaserShot.cpp
+        shot/LaserShot.hpp
+        shot/LaserShotRenderer.cpp
+        shot/LaserShotRenderer.hpp
         rendering/GLContextRenderer.cpp
         rendering/GLContextRenderer.hpp
-        rendering/PlayerRenderer.cpp
-        rendering/PlayerRenderer.hpp
-        rendering/AsteroidRenderer.cpp
-        rendering/AsteroidRenderer.hpp
-        rendering/LaserShotRenderer.cpp
-        rendering/LaserShotRenderer.hpp
         rendering/SDLWindow.cpp
         rendering/Shader.cpp
         rendering/Shader.hpp

@@ -14,7 +14,7 @@ void initLogging() {
 
 int main() {
   initLogging();
-  Game game("Asteroids!");
+  asteroids::Game game("Asteroids!");
   game.run();
   return 0;
 }

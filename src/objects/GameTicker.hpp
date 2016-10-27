@@ -3,7 +3,7 @@
 
 #include "ObjectScene.hpp"
 
-namespace objects {
+namespace asteroids {
   class GameTicker {
   public:
     virtual ~GameTicker() {};
@@ -15,7 +15,7 @@ namespace objects {
     static const float ticks_per_second;
   };
 
-  std::shared_ptr<GameTicker> createTicker(std::shared_ptr<ObjectScene>& scene);
+  std::shared_ptr<GameTicker> create_ticker(std::shared_ptr<ObjectScene>& scene);
 }
 
 #endif //ASTEROIDS_GAMETICKER_HPP

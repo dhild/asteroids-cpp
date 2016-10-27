@@ -5,9 +5,9 @@
 
 namespace rendering {
 
-  class DrawableTextOverlay : public TextOverlay {
+  class DrawableTextOverlay {
   public:
-    virtual ~DrawableTextOverlay() override {};
+    virtual ~DrawableTextOverlay() {};
 
     virtual void draw() const = 0;
   };

@@ -12,7 +12,7 @@ namespace {
     explicit SimpleTextOverlay();
     virtual ~SimpleTextOverlay() override {}
 
-    virtual void update(const std::string& newText) override {
+    virtual void update(const std::string& newText) {
       text = newText;
     }
 

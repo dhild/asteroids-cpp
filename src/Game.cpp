@@ -7,7 +7,9 @@
 #include "Game.hpp"
 #include "objects/GameTicker.hpp"
 
-Game::Game(const char* title) : window(rendering::createWindow(title, 1000, 800)) {
+using namespace asteroids;
+
+Game::Game(const char* title) : window(create_window(title, 1000, 800)) {
   SDL_InitSubSystem(SDL_INIT_EVENTS);
 }
 
@@ -16,8 +18,8 @@ Game::~Game() {
 }
 
 void Game::run() {
-  auto scene = objects::create_scene();
-  auto ticker = objects::createTicker(scene);
+  auto scene = create_scene();
+  auto ticker = create_ticker(scene);
   window->render(scene);
   ticker->start();
 
